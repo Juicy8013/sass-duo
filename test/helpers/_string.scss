@@ -1,5 +1,5 @@
 @use 'node_modules/sass-true/sass/true';
-@use '../../src/helpers/string' as duo;
+@use 'src/helpers/string' as duo;
 
 @include true.test-module("String") {
   @include true.test("@function — string-replace()") {
