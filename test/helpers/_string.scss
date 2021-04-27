@@ -1,0 +1,14 @@
+@use 'node_modules/sass-true/sass/true';
+@use '../../src/helpers/string' as duo;
+
+@include true.test-module("String") {
+  @include true.test("@function — string-replace()") {
+    $string: "hello world!";
+
+    @include true.assert-equal(duo.string-replace(" world", "", $string), "hello!");
+    @include true.assert-equal(duo.string-replace("hello", "goodbye", $string), "goodbye world!");
+
+    $string: "clap clap clap";
+    @include true.assert-equal(duo.string-replace("clap", "clap!", $string), "clap! clap! clap!");
+  }
+}

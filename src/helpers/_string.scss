@@ -1,0 +1,67 @@
+////
+/// @group helpers-string
+///
+/// @access private
+///
+////
+
+@use 'sass:string';
+
+@forward 'sass:string';
+
+/// Replace all occurrences of the search string with the replacement string
+///
+/// @param {string} $search The value being searched for
+///
+/// @param {string} $replace The replacement value that replaces found search values
+///
+/// @param {string} $subject The string being search and replaced on
+///
+/// @return {string} Returns a string with the replaced values.
+///
+@function string-replace($search, $replace, $subject) {
+  @if type-of($search) != 'string' {
+    @error 'Argument `$search` must be of type `string`.';
+  }
+  @if type-of($replace) != 'string' {
+    @error 'Argument `$replace` must be of type `string`.';
+  }
+  @if type-of($subject) != 'string' {
+    @error 'Argument `$subject` must be of type `string`.';
+  }
+
+  $index: string.index($subject, $search);
+  $output: '';
+
+  // Loop while we found an occurence of the $search string
+  // in the $subject string.
+  @while $index != null {
+    $before: '';
+    $after: '';
+
+    $x: $index; // Determine the coordinates of the $search value;
+    $y: $index + string.length($search) - 1;
+
+    @if $y == string.length($subject) {
+      // The $search string hits the end of the string;
+      $before: string.slice($subject, 1, $x - 1);
+    } @else if $x == 1 {
+      // The $search string hits the beginning of the string;
+      $after: string.slice($subject, $y + 1);
+    } @else {
+      $before: string.slice($subject, 1, $x - 1);
+      $after: string.slice($subject, $y + 1);
+    }
+
+    $output: #{$output + $before + $replace};
+
+    // Do it again while there is still an occurence of the $search
+    // string in the $subject string;
+    $subject: $after;
+    $index: string.index($subject, $search);
+  }
+
+  $output: $output + $subject;
+
+  @return $output;
+}

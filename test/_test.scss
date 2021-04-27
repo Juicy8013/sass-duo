@@ -1,3 +1,4 @@
 @use "../src/duo" with ($errors: false);
 
+@use "helpers";
 @use "modules";
