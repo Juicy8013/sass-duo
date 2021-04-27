@@ -26,7 +26,6 @@ gulp.task('sassdoc', function () {
     'no-update-notifier': false,
     verbose: false,
     strict: false,
-    verbose: true,
     display: {
       access: ['public'],
       alias: true,

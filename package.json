@@ -1,13 +1,12 @@
 {
-  "name": "duo",
-  "version": "1.0.0",
-  "description": "Preums Sass framework.",
-  "main": "index.js",
+  "name": "sass-duo",
+  "version": "1.0.1",
+  "description": "Scss framework.",
   "scripts": {
-    "help": "gulp --tasks",
     "test": "mocha",
-    "sassdoc": "gulp sassdoc",
-    "lint": "npx stylelint ./src/**/*.scss"
+    "doc": "gulp sassdoc",
+    "lint": "npx stylelint ./src/**/*.scss",
+    "build": "npm run lint --fix && npm run doc"
   },
   "repository": {
     "type": "git",
