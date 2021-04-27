@@ -1,0 +1,51 @@
+////
+/// @group modules-theme
+///
+////
+
+@use '../error' as *;
+
+/// The default theme parent css selector
+///
+/// @type string
+///
+$theme-default-parent-selector: 'body' !default;
+
+/// The default theme child css selector
+///
+/// @type string
+///
+$theme-default-child-selector: ':root' !default;
+
+/// The default theme parent css selector's modifier
+///
+/// @type string
+///
+$theme-default-parent-selector-modifier: '.%name%-theme' !default;
+
+@if type-of($theme-default-parent-selector) != 'string' {
+  @include error(
+    $message: 'Parameter `$theme-default-parent-selector`'
+    + ' must be of type `string`',
+    $source: 'sass-duo/modules/theme',
+    $public: false
+  );
+}
+
+@if type-of($theme-default-child-selector) != 'string' {
+  @include error(
+    $message: 'Parameter `$theme-default-child-selector`'
+    + ' must be of type `string`',
+    $source: 'sass-duo/modules/theme',
+    $public: false
+  );
+}
+
+@if type-of($theme-default-parent-selector-modifier) != 'string' {
+  @include error(
+    $message: 'Parameter `$theme-default-parent-selector-modifier`'
+    + ' must be of type `string`',
+    $source: 'sass-duo/modules/theme',
+    $public: false
+  );
+}

@@ -1,0 +1,185 @@
+////
+/// @group modules-theme
+///
+////
+
+@use '../error' as *;
+@use '../../helpers/string' as *;
+
+@import 'settings';
+
+/// Declare css constants for all themes
+///
+/// @param {map} $constants The map containing the constants to declare
+///
+/// @example scss - Declare one or more constants
+///   @include theme-constants((
+///     'falu-red':  hsl(4, 71%, 32%),
+///     'royal-blue': hsl(246, 72%, 59%),
+///     'mint-green': hsl(114, 100%, 77%)
+///   ));
+///
+@mixin theme-constants($constants) {
+  @if type-of($constants) != 'map' {
+    @include error(
+      $message: 'Argument `$constants` must be of type `map`.',
+      $source: 'sass-duo/modules/theme/theme-constants()'
+    );
+  }
+
+  %duo-themes-css-constants {
+    @each $k, $v in $constants {
+      --#{'' + $k}: #{'' + $v};
+    }
+  }
+}
+
+/// Generates a css selector according to a specific theme name
+///
+/// @access private
+///
+/// @param {string} $name The name of the theme
+///
+/// @param {string} $parent The string representing the parent selector
+///
+/// @param {string} $modifier The parent modifier string
+///
+/// @param {string} $child The string representing the child selector
+///
+/// @return {list} Returns a list containing the computed selector(s)
+///
+@function _css-selector($theme, $parent, $modifier, $child) { /* stylelint-disable-line */
+  $selector: selector-unify($parent, string-replace('%name%', $theme, $modifier));
+  $selector: selector-nest($selector, $child);
+
+  @return $selector;
+}
+
+/// Render a theme with configured variables and optionnally pre-configured constants
+///
+/// @see {mixin} theme-constants
+///
+/// @param {string} $name The name of the theme to render
+///
+/// @param {map} $variables The map containing the variables
+///
+/// @param {string} $parent ['body'] The parent css selector
+///
+/// @param {string} $modifier ['.%name%-theme'] The parent css selector modifier
+///
+/// @param {string} $child [':root'] The child css selector
+///
+/// @example scss - Rendering a theme
+///   @include theme-render(
+///     'light',
+///     (
+///       'royal-blue': hsl(246, 72%, 59%)
+///     )
+///   );
+///
+///   // Output
+///   // body.light-theme :root {
+///   //   --royal-blue: #594be2;
+///   // }
+///
+/// @example scss - Rendering multiple themes with constants
+///   @include theme-constants((
+///     'falu-red':  hsl(4, 71%, 32%)
+///   ));
+///
+///   @include theme-render(
+///     'light',
+///     (
+///       'royal-blue': hsl(246, 72%, 59%)
+///     )
+///   );
+///
+///   @include theme-render(
+///     'dark',
+///     (
+///       'mint-green': hsl(114, 100%, 77%)
+///     )
+///   );
+///
+///   // Output
+///   // body.dark-theme :root,
+///   // body.light-theme :root {
+///   //   --falu-red: #8c2018;
+///   // }
+///
+///   // body.light-theme :root {
+///   //   --royal-blue: #594be2;
+///   // }
+///
+///   // body.dark-theme :root {
+///   //   --mint-green: 96ff8a;
+///   // }
+///
+@mixin theme-render(
+  $name,
+  $variables,
+  $parent: $theme-default-parent-selector,
+  $modifier: $theme-default-parent-selector-modifier,
+  $child: $theme-default-child-selector
+) {
+  // ========== VALIDATOR ========== //
+
+  $valid: true;
+
+  @if type-of($name) != 'string' {
+    $valid: false;
+    @include error(
+      $message: 'Argument `$name` must be of type `string`',
+      $source: 'sass-duo/modules/theme/theme-render()'
+    );
+  }
+
+  @if type-of($variables) != 'map' {
+    $valid: false;
+    @include error(
+      $message: 'Argument `$variables` must be of type `map`',
+      $source: 'sass-duo/modules/theme/theme-render()'
+    );
+  }
+
+  @if type-of($parent) != 'string' {
+    $valid: false;
+    @include error(
+      $message: 'Argument `$parent` must be of type `string`',
+      $source: 'sass-duo/modules/theme/theme-render()'
+    );
+  }
+
+  @if type-of($modifier) != 'string' {
+    $valid: false;
+    @include error(
+      $message: 'Argument `$modifier` must be of type `string`',
+      $source: 'sass-duo/modules/theme/theme-render()'
+    );
+  }
+
+  @if type-of($child) != 'string' {
+    $valid: false;
+    @include error(
+      $message: 'Argument `$child` must be of type `string`',
+      $source: 'sass-duo/modules/theme/theme-render()'
+    );
+  }
+
+  // ========== CORE ========== //
+
+  @if $valid and length($variables) > 0 {
+    #{_css-selector($name, $parent, $modifier, $child)} {
+      @extend %duo-themes-css-constants !optional;
+
+      @each $k, $v in $variables {
+        --#{'' + $k}: #{'' + $v};
+      }
+    }
+  } @else {
+    @include error(
+      'The theme `#{$name}` was misconfigured and' + ' it will not be rendered.',
+      $source: 'sass-duo/modules/theme/theme-render()'
+    );
+  }
+}

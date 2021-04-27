@@ -7,7 +7,7 @@
 
 @use 'sass:string';
 
-@forward 'sass:string';
+@forward 'sass:string' as string-*;
 
 /// Replace all occurrences of the search string with the replacement string
 ///

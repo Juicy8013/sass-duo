@@ -1,0 +1,76 @@
+@use 'node_modules/sass-true/sass/true';
+@use 'src/modules/theme' as duo;
+
+@include true.test-module("Theme") {
+  @include true.test("@mixin — theme-render()") {
+    @include true.assert() {
+      @include true.output($selector: false) {
+        @include duo.theme-constants(
+          (
+            "danger": hsl(358, 83%, 52%),
+            "success": hsl(113, 99%, 37%),
+          )
+        );
+
+        @include duo.theme-render(
+          "light",
+          (
+            "foo": 20px,
+            "bar": ridge,
+            "baz": hsl(29, 96%, 47%),
+          )
+        );
+
+        @include duo.theme-render(
+          "dimmed",
+          (
+            "foo": 20px,
+            "bar": dotted,
+            "baz": hsl(76, 89%, 51%),
+          ),
+          $parent: "main"
+        );
+      }
+
+      @include true.expect($selector: false) {
+        main.dimmed-theme :root,
+        body.light-theme :root {
+          --danger: #ea1f26;
+          --success: #17bc01;
+        }
+
+        body.light-theme :root {
+          --foo: 20px;
+          --bar: ridge;
+          --baz: #eb7405;
+        }
+
+        main.dimmed-theme :root {
+          --foo: 20px;
+          --bar: dotted;
+          --baz: #b6f113;
+        }
+      }
+    }
+
+    @include true.assert() {
+      @include true.output($selector: false) {
+        @include duo.theme-render(0, 0, 0, 0, 0);
+      }
+
+      @include true.expect($selector: false) {
+        /* WARNING: [sass-duo/modules/theme/theme-render()] Argument `$name` must be of type `string` */
+
+        /* WARNING: [sass-duo/modules/theme/theme-render()] Argument `$variables` must be of type `map` */
+
+        /* WARNING: [sass-duo/modules/theme/theme-render()] Argument `$parent` must be of type `string` */
+
+        /* WARNING: [sass-duo/modules/theme/theme-render()] Argument `$modifier` must be of type `string` */
+
+        /* WARNING: [sass-duo/modules/theme/theme-render()] Argument `$child` must be of type `string` */
+
+        /* WARNING: [sass-duo/modules/theme/theme-render()] The theme `0` was misconfigured and it will not be rendered. */
+      }
+    }
+  }
+}
