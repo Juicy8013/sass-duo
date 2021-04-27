@@ -13,4 +13,7 @@ Newer versions of Git will do this automatically, but older versions will requir
 git submodule update --init --recursive
 ```
 
-For further informations please read this article : https://github.blog/2016-02-01-working-with-submodules/.
+For further informations please read this article: https://github.blog/2016-02-01-working-with-submodules/.
+
+# Documentation
+Read Sass-Duo documentation at this address: https://gmvqbu.github.io/sass-duo/index.html
