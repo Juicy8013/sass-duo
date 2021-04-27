@@ -1,0 +1,143 @@
+////
+/// @group error
+///
+////
+
+@import 'settings';
+
+/// Validates error arguments
+///
+/// @param {string} $message The error message to send
+///
+/// @param {string} $source The source of the error
+///
+/// @param {string} $level The error level
+///
+/// @param {bool} $silent Wether to display the error
+///
+/// @param {bool} $public Wether the error is printed in the final css
+///
+/// @return {string|true} Returns the error message or true
+///
+@function _validator($message, $source, $level, $silent, $public) { /* stylelint-disable-line */
+  @if type-of($message) != 'string' {
+    @return 'Argument `$message` must be of type `string`.';
+  }
+
+  @if type-of($source) != 'string' {
+    @return 'Argument `$source` must be of type `string`.';
+  }
+
+  $levels: 'error', 'warning', 'debug';
+  @if index($levels, $level) == null {
+    @return 'Argument `$level` must be of type `string`.'
+      + ' Accepted values are: `error`, `warning` or `debug` .';
+  }
+
+  @if type-of($silent) != 'bool' {
+    @return 'Argument `$silent` must be of type `bool`.';
+  }
+
+  @if type-of($public) != 'bool' {
+    @return 'Argument `$public` must be of type `bool`.';
+  }
+
+  @return true;
+}
+
+/// Prefixes an error message
+///
+/// @param {string} $source The source of the error
+///
+/// @param {string} $message The error message
+///
+/// @param {string} $level [null] The error level
+///
+/// @return {string} The prefixed message
+///
+@function _prefix($source, $message, $level: null) { /* stylelint-disable-line */
+  @if $source != '' {
+    $message: '[#{$source}] #{$message}';
+  }
+  @if $level {
+    $prefix: map-get($_prefixes, $level);
+    $message: '#{$prefix + $message}';
+  }
+
+  @return $message;
+}
+
+/// Sends an error message in command prompt
+///
+/// @param {string} $message The error message to send
+///
+/// @param {string} $source [''] The source of the error
+///
+/// @param {string} $level ['warning'] The error level
+///
+/// @param {bool} $silent [false] Wether to hide the error
+///
+/// @param {*} $return [null] The value to return
+///
+/// @return {string} Returns the error message
+///
+@function error(
+  $message,
+  $source: '',
+  $level: $errors-level,
+  $silent: if($errors, false, true),
+  $return: null
+) {
+  $valid: _validator($message, $source, $level, $silent, false);
+  @if $valid != true {
+    @error $valid;
+  }
+
+  $message: _prefix($source, $message);
+
+  @if $silent == false {
+    @if $level == 'error' {
+      @error $message;
+    } @else if $level == 'warning' {
+      @warn $message;
+    } @else if $level == 'debug' {
+      @debug $message; /* stylelint-disable-line */
+    }
+  }
+
+  @return $return;
+}
+
+/// Prints an error in the css file and/or send an error in command prompt
+///
+/// @param {string} $message The error message to send
+///
+/// @param {string} $source [''] The source of the error
+///
+/// @param {string} $level ['warning'] The error level
+///
+/// @param {bool} $silent [false] Wether to display the error
+///
+/// @param {bool} $public [true] Wether the error is printed in the final css
+///
+@mixin error(
+  $message,
+  $source: '',
+  $level: $errors-level,
+  $public: $errors-in-css,
+  $silent: if($errors, false, true)
+) {
+  $valid: _validator($message, $source, $level, $silent, $public);
+  @if $valid != true {
+    @error $valid;
+  }
+
+  $error: error($message, $source, $level, $silent);
+  $message: _prefix($source, $message, $level);
+
+  @if $public {
+    @each $line in $message {
+      /* #{$line} */
+    }
+  }
+}

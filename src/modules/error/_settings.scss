@@ -1,0 +1,53 @@
+////
+/// @group error
+///
+////
+
+/// Wether to display errors
+///
+/// @type bool
+///
+$errors: true !default;
+
+/// Defines the level of the errors treatment.<br>
+/// Accepted values are: 'error', 'warning', 'debug'
+///
+/// @type string
+///
+$errors-level: 'warning' !default;
+
+/// Wether to display errors in css or not.
+///
+/// @type bool
+///
+$errors-in-css: true !default;
+
+@if type-of($errors) != 'bool' {
+  @error 'Parameter `$errors` must be of type `bool`.';
+}
+
+$levels: 'error', 'warning', 'debug';
+@if index($levels, $errors-level) == null {
+  @error 'Parameter `$errors-level` must be of type `string`.'
+    + ' Accepted values are: `error`, `warning` or `debug` .';
+}
+
+@if type-of($errors-in-css) != 'bool' {
+  @error 'Parameter `$errors-in-css` must be of type `bool`.';
+}
+
+@if not $errors {
+  @warn 'Errors are turned off! Beware that you might miss important informations.';
+}
+
+/// Error message prefixes
+///
+/// @access private
+///
+/// @type map
+///
+$_prefixes: (
+  'error': 'ERROR: ',
+  'warning': 'WARNING: ',
+  'debug': 'INFO: ',
+);
