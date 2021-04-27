@@ -1,0 +1,31 @@
+{
+  "name": "duo",
+  "version": "1.0.0",
+  "description": "Preums Sass framework.",
+  "main": "index.js",
+  "scripts": {
+    "help": "gulp --tasks",
+    "test": "mocha",
+    "sassdoc": "gulp sassdoc",
+    "lint": "npx stylelint ./src/**/*.scss"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmvqbu/duo.git"
+  },
+  "author": "gmvqbu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gmvqbu/duo/issues"
+  },
+  "homepage": "https://github.com/gmvqbu/duo#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "mocha": "^8.3.2",
+    "sass": "^1.32.8",
+    "sass-true": "^6.0.1",
+    "sassdoc": "^2.7.3",
+    "stylelint": "^13.12.0",
+    "stylelint-config-sass-guidelines": "^8.0.0"
+  }
+}
