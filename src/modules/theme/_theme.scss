@@ -13,11 +13,13 @@
 /// @param {map} $constants The map containing the constants to declare
 ///
 /// @example scss - Declare one or more constants
-///   @include theme-constants((
-///     'falu-red':  hsl(4, 71%, 32%),
-///     'royal-blue': hsl(246, 72%, 59%),
-///     'mint-green': hsl(114, 100%, 77%)
-///   ));
+///   @include theme-constants(
+///     (
+///       'falu-red':  hsl(4, 71%, 32%),
+///       'royal-blue': hsl(246, 72%, 59%),
+///       'mint-green': hsl(114, 100%, 77%)
+///     )
+///   );
 ///
 @mixin theme-constants($constants) {
   @if type-of($constants) != 'map' {
@@ -56,8 +58,6 @@
 }
 
 /// Render a theme with configured variables and optionnally pre-configured constants
-///
-/// @see {mixin} theme-constants
 ///
 /// @param {string} $name The name of the theme to render
 ///

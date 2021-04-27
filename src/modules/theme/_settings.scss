@@ -11,17 +11,17 @@
 ///
 $theme-default-parent-selector: 'body' !default;
 
-/// The default theme child css selector
-///
-/// @type string
-///
-$theme-default-child-selector: ':root' !default;
-
 /// The default theme parent css selector's modifier
 ///
 /// @type string
 ///
 $theme-default-parent-selector-modifier: '.%name%-theme' !default;
+
+/// The default theme child css selector
+///
+/// @type string
+///
+$theme-default-child-selector: ':root' !default;
 
 @if type-of($theme-default-parent-selector) != 'string' {
   @include error(
