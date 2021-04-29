@@ -1,7 +1,7 @@
 {
   "name": "sass-duo",
-  "version": "1.0.1",
-  "description": "Scss framework.",
+  "version": "1.0.2",
+  "description": "Tiny scss framework.",
   "scripts": {
     "test": "mocha",
     "doc": "gulp sassdoc",
