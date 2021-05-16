@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gmvqbu/duo.git"
+    "url": "git+https://github.com/gmvqbu/sass-duo.git"
   },
   "author": "gmvqbu",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gmvqbu/duo/issues"
+    "url": "https://github.com/gmvqbu/sass-duo/issues"
   },
-  "homepage": "https://github.com/gmvqbu/duo#readme",
+  "homepage": "https://github.com/gmvqbu/sass-duo#readme",
   "devDependencies": {
     "gulp": "^4.0.2",
     "mocha": "^8.3.2",
