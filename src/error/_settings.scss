@@ -1,5 +1,5 @@
 ////
-/// @group modules-error
+/// @group error
 ///
 ////
 
@@ -22,18 +22,37 @@ $errors-level: 'warning' !default;
 ///
 $errors-in-css: true !default;
 
+/// Errors defaults source
+///
+/// @type string
+///
+$errors-messages-default-source: null !default;
+
+/// Errors defaults prefix
+///
+/// @type string
+///
+$errors-messages-source-prefix: null !default;
+
 @if type-of($errors) != 'bool' {
   @error 'Parameter `$errors` must be of type `bool`.';
 }
 
-$levels: 'error', 'warning', 'debug';
-@if index($levels, $errors-level) == null {
-  @error 'Parameter `$errors-level` must be of type `string`.'
+$levels: ('error', 'warning', 'debug');
+@if (type-of($errors-level) != 'string') or (not index($levels, $errors-level)) {
+  @error 'Setting `$errors-level` must be of type `string`.'
     + ' Accepted values are: `error`, `warning` or `debug` .';
 }
 
 @if type-of($errors-in-css) != 'bool' {
-  @error 'Parameter `$errors-in-css` must be of type `bool`.';
+  @error 'Setting `$errors-in-css` must be of type `bool`.';
+}
+
+$source-types: ('null', 'string');
+@if not index($source-types, type-of($errors-messages-default-source)) {
+  @error 'Settings `$errors-messages-default-source` must be of type `string`.';
+} @else if not index($source-types, type-of($errors-messages-source-prefix)) {
+  @error 'Settings `$errors-message-source-prefix` must be of type `string`.';
 }
 
 @if not $errors {

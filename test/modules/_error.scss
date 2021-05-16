@@ -1,19 +1,19 @@
 @use 'node_modules/sass-true/sass/true';
-@use 'src/error' as duo;
+@use 'src/error' as *;
 
 @include true.test-module('Error') {
     @include true.test('@function — error()') {
-      @include true.assert-equal(duo.error('Sample error.'), null);
-      @include true.assert-equal(duo.error('Sample error.', $return: -1), -1);
+      @include true.assert-equal(error('Sample error.'), null);
+      @include true.assert-equal(error('Sample error.', $return: -1), -1);
     }
 
     @include true.test('@mixin    — error()') {
       @include true.assert('In-CSS errors') {
         @include true.output {
-          @include duo.error('Sample error.', $level: 'error');
-          @include duo.error('Sample error.', $level: 'warning');
-          @include duo.error('Sample error.', $level: 'debug');
-          @include duo.error('Sample error.', 'test/output');
+          @include error('Sample error.', $level: 'error');
+          @include error('Sample error.', $level: 'warning');
+          @include error('Sample error.', $level: 'debug');
+          @include error('Sample error.', 'output');
         }
 
         @include true.expect {
@@ -26,7 +26,7 @@
 
       @include true.assert('In-CSS (private) errors') {
         @include true.output {
-          @include duo.error('Sample error.', $public: false);
+          @include error('Sample error.', $public: false);
         }
 
         @include true.expect {

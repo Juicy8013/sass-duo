@@ -19,9 +19,8 @@ gulp.task('sassdoc', function () {
     package: './package.json',
     autofill: ['content'],
     groups: {
-      'helpers-string': 'Helpers — String',
-      'modules-error': 'Modules — Error',
-      'modules-theme': 'Modules — Theme',
+      'error': 'Error',
+      'theme': 'Theme',
     },
     'no-update-notifier': false,
     verbose: false,

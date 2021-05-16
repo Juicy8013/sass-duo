@@ -1,4 +1,7 @@
-@use "../src/duo" with ($errors: false);
+@use "../src/duo" with (
+  $errors: false,
+  $errors-messages-source-prefix: 'test/'
+);
 
 @use "helpers";
 @use "modules";

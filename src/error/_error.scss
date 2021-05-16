@@ -1,5 +1,5 @@
 ////
-/// @group modules-error
+/// @group error
 ///
 ////
 
@@ -21,17 +21,18 @@
 ///
 /// @return {string|true} Returns the error message or true
 ///
-@function _validator($message, $source, $level, $silent, $public) { /* stylelint-disable-line */
+@function _validator($message, $source, $level, $silent, $public) { /* stylelint-disable-line scss/at-function-pattern */
   @if type-of($message) != 'string' {
     @return 'Argument `$message` must be of type `string`.';
   }
 
-  @if type-of($source) != 'string' {
+  $source-types: ('null', 'string');
+  @if not index($source-types, type-of($source)) {
     @return 'Argument `$source` must be of type `string`.';
   }
 
   $levels: 'error', 'warning', 'debug';
-  @if index($levels, $level) == null {
+  @if (type-of($level) != 'string') or (not index($levels, $level)) {
     @return 'Argument `$level` must be of type `string`.'
       + ' Accepted values are: `error`, `warning` or `debug` .';
   }
@@ -59,9 +60,9 @@
 ///
 /// @return {string} The prefixed message
 ///
-@function _prefix($source, $message, $level: null) { /* stylelint-disable-line */
-  @if $source != '' {
-    $message: '[#{$source}] #{$message}';
+@function _prefix($message, $source, $level: null) { /* stylelint-disable-line scss/at-function-pattern */
+  @if $source {
+    $message: '[#{$errors-messages-source-prefix + $source}] #{$message}';
   }
   @if $level {
     $prefix: map-get($_prefixes, $level);
@@ -87,7 +88,7 @@
 ///
 @function error(
   $message,
-  $source: '',
+  $source: $errors-messages-default-source,
   $level: $errors-level,
   $silent: if($errors, false, true),
   $return: null
@@ -97,9 +98,9 @@
     @error $valid;
   }
 
-  $message: _prefix($source, $message);
+  $message: _prefix($message, $source);
 
-  @if $silent == false {
+  @if not $silent {
     @if $level == 'error' {
       @error $message;
     } @else if $level == 'warning' {
@@ -126,7 +127,7 @@
 ///
 @mixin error(
   $message,
-  $source: '',
+  $source: $errors-messages-default-source,
   $level: $errors-level,
   $public: $errors-in-css,
   $silent: if($errors, false, true)
@@ -137,7 +138,7 @@
   }
 
   $error: error($message, $source, $level, $silent);
-  $message: _prefix($source, $message, $level);
+  $message: _prefix($message, $source, $level);
 
   @if $public {
     @each $line in $message {

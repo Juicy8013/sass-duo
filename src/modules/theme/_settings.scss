@@ -1,9 +1,9 @@
 ////
-/// @group modules-theme
+/// @group theme
 ///
 ////
 
-@use '../error' as *;
+@use '../../error' as *;
 
 /// The default theme parent css selector
 ///
@@ -25,7 +25,7 @@ $theme-default-child-selector: ':root' !default;
 
 @if type-of($theme-default-parent-selector) != 'string' {
   @include error(
-    $message: 'Parameter `$theme-default-parent-selector`'
+    $message: 'Setting `$theme-default-parent-selector`'
     + ' must be of type `string`',
     $source: 'sass-duo/modules/theme',
     $public: false
@@ -34,7 +34,7 @@ $theme-default-child-selector: ':root' !default;
 
 @if type-of($theme-default-child-selector) != 'string' {
   @include error(
-    $message: 'Parameter `$theme-default-child-selector`'
+    $message: 'Setting `$theme-default-child-selector`'
     + ' must be of type `string`',
     $source: 'sass-duo/modules/theme',
     $public: false
@@ -43,7 +43,7 @@ $theme-default-child-selector: ':root' !default;
 
 @if type-of($theme-default-parent-selector-modifier) != 'string' {
   @include error(
-    $message: 'Parameter `$theme-default-parent-selector-modifier`'
+    $message: 'Setting `$theme-default-parent-selector-modifier`'
     + ' must be of type `string`',
     $source: 'sass-duo/modules/theme',
     $public: false

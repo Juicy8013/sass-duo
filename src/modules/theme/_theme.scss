@@ -1,9 +1,9 @@
 ////
-/// @group modules-theme
+/// @group theme
 ///
 ////
 
-@use '../error' as *;
+@use '../../error' as *;
 @use '../../helpers/string' as *;
 
 @import 'settings';
@@ -50,7 +50,7 @@
 ///
 /// @return {list} Returns a list containing the computed selector(s)
 ///
-@function _css-selector($theme, $parent, $modifier, $child) { /* stylelint-disable-line */
+@function _css-selector($theme, $parent, $modifier, $child) { /* stylelint-disable-line scss/at-function-pattern */
   $selector: selector-unify($parent, string-replace('%name%', $theme, $modifier));
   $selector: selector-nest($selector, $child);
 
