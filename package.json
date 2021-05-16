@@ -1,6 +1,6 @@
 {
   "name": "sass-duo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Tiny scss framework.",
   "scripts": {
     "test": "mocha",
